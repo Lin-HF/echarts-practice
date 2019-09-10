@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App">
         <nav>
-          <ul style={{ display: "inline-block" }}>
+          <ul>
             <li>
               <NavLink to="/bar">Bar</NavLink>
             </li>
