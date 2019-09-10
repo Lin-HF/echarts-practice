@@ -4,6 +4,7 @@ import Bar from "./echarts/bar";
 import Pie from "./echarts/pie";
 import Line from "./echarts/line";
 import Graph from "./echarts/graph";
+import Request from './Http/request';
 import { NavLink, Switch, Route } from "react-router-dom";
 import "./App.css";
 
@@ -26,7 +27,7 @@ class App extends Component {
               <NavLink to="/graph">Graph</NavLink>
             </li>
             <li>
-              <NavLink to="/graph">Http</NavLink>
+              <NavLink to="/http">Http</NavLink>
             </li>
           </ul>
         </nav>
@@ -35,6 +36,7 @@ class App extends Component {
           <Route path="/pie" component={Pie} />
           <Route path="/line" component={Line} />
           <Route path="/graph" component={Graph} />
+          <Route path="/http" component={Request} />
           <Route
             path="/"
             render={() => (

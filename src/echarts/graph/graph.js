@@ -1,11 +1,8 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-//简单加载
-// import ReactEcharts from 'echarts-for-react';
-// 按需加载
-// import the core library.
+
 import ReactEchartsCore from 'echarts-for-react/lib/core';
-// then import echarts modules those you have used manually.
+
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/graph';
 import 'echarts/lib/component/tooltip';
@@ -14,9 +11,18 @@ import 'echarts/lib/component/title';
 import 'echarts/lib/component/legend';
 
 import echartTheme from '../echartTheme';
-import { extendChartView } from 'echarts/lib/echarts';
+
+import axios from 'axios';
 
 export default class Graph extends React.Component {
+
+    state = {
+        data: null
+    }
+
+    componentDidMount() {
+
+    }
 
     componentWillMount() {
         echarts.registerTheme('Imooc', echartTheme);
@@ -83,7 +89,6 @@ export default class Graph extends React.Component {
                 right: '4%',
                 bottom: '3%',
                 containLabel: true,
-                // height: '500px'
             },
             title: {
                 text: 'Simple Graph',
@@ -104,9 +109,7 @@ export default class Graph extends React.Component {
                         show: true
                     }
                 },
-                // edgeSymbol: ['none', 'arrow'],
                 itemStyle: {
-                    // color: 'rgba(128, 128, 128, 0.5)',
                     opacity: 1.0,
                 },
                 label: {
@@ -115,7 +118,6 @@ export default class Graph extends React.Component {
                         textStyle: {
                             fontSize: 10
                         },
-                        // position: 'right'
                     }
                 },
                 edgeLabel: {
@@ -127,13 +129,7 @@ export default class Graph extends React.Component {
                     }
                 },
                 data: datas[0].nodes,
-                // left: (idx % 4) * 25 + '%',
-                // top: Math.floor(idx / 4) * 25 + '%',
-                // width: '25%',
-                // height: '25%',
                 force: {
-                    // initLayout: 'circular'
-                    // gravity: 0
                     repulsion: 1000,
                     edgeLength: 30
                 },
@@ -145,27 +141,6 @@ export default class Graph extends React.Component {
                         target: e[1]
                     };
                 }),
-                // graphic: echarts.util.map(datas[0], (dataItem, dataIndex) => {
-                //     return {
-                //         type: 'circle',
-                //         shape: {
-                //             r: dataItem.symbolSize / 2
-                //         },
-                //         position: echarts.convertToPixel('grid', dataItem),
-                //         invisible: true,
-                //         draggable: true,
-                //         z: 100,
-                //         ondrag: echarts.util.curry((dataIndex) => {
-                //             datas[dataIndex] = echarts.convertFromPixel('grid', this.position);
-                //             echarts.setOption({
-                //                 series: [{
-                //                     id: 'a',
-                //                     datas: datas
-                //                 }]
-                //             });
-                //         }, dataIndex)
-                //     }
-                // } )
             }
         };
         return option;
