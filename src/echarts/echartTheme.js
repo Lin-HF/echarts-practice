@@ -1,7 +1,20 @@
 export default {
     "color": [
-        "#f9c700",
-        "#ff5400",
+        // "#f9c700",
+        // "#ff5400",
+        // "#6699cc",
+        // "#9cb3c5",
+        // "#e0e6ec",
+        // "#666666",
+        // "#787464",
+        // "#cc7e63",
+        // "#724e58",
+        // "#4b565b"
+        "#4e73df",
+        "#1cc88a",
+        "#36b9cc",
+        "#f6c23e",
+        "#e74a3b",
         "#6699cc",
         "#9cb3c5",
         "#e0e6ec",
@@ -10,6 +23,7 @@ export default {
         "#cc7e63",
         "#724e58",
         "#4b565b"
+
     ],
     "backgroundColor": "#ffffff",
     "textStyle": {},

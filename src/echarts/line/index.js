@@ -132,7 +132,9 @@ export default class Line extends React.Component {
                         1200,
                         800
                     ],
-                    areaStyle: {}
+                    areaStyle: {
+                        opacity: 0.1
+                    }
                 }
             ]
         }
