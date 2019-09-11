@@ -12,8 +12,6 @@ import 'echarts/lib/component/legend';
 
 import echartTheme from '../echartTheme';
 
-import axios from 'axios';
-
 export default class Graph extends React.Component {
 
     state = {
@@ -21,12 +19,15 @@ export default class Graph extends React.Component {
     }
 
     componentDidMount() {
-
+        let myChart = echarts.init(document.getElementById("net"));
+        myChart.setOption(this.getOption());
     }
 
     componentWillMount() {
         echarts.registerTheme('Imooc', echartTheme);
         // echarts.init();
+        
+        // let myChart = echarts.init();
     }
 
     createNodes = (count) => {
@@ -125,8 +126,10 @@ export default class Graph extends React.Component {
                         show: true,
                         formatter: function (x) {
                             return x.data.name;
-                        }
-                    }
+                        },
+                        
+                    },
+                    
                 },
                 data: datas[0].nodes,
                 force: {
@@ -158,6 +161,7 @@ export default class Graph extends React.Component {
                         option={this.getOption()}
                         theme='Imooc'
                         />
+                        <div id="net"></div>
                     </Card.Body>
                 </Card>
                 

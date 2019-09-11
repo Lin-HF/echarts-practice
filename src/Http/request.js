@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Graph from '../echarts/graph/graph';
+import Test from '../echarts/graph/test';
+import Test2 from '../echarts/graph/test2';
 
 class Request extends Component {
     state = {
         // auth: null,
         config: null,
-        data: "Default response."
+        data: null,
+        nodes: null,
+        edges: null
     }
 
     // createAuth() {
@@ -45,16 +50,17 @@ class Request extends Component {
             "statements": [ {
                 "statement": "match (g:Gene {label:'JAK1'})," + 
                              "(d:Phenotype {label:'Diabetes'})," + 
-                             "p = (g)-[r*..2]-(d) return p limit 50"
+                             "p = (g)-[r*..2]-(d) return p limit 1"
             } ]
         };
         axios.post(uri, req, this.state.config)
             .then( response => {
                 // for checking the response structure
                 console.log(response);
-                const res_dat = JSON.stringify(response.data.results[0]);
-                this.setState({data: res_dat});
-                // console.log(str_posts);
+                const res_dat = response.data.results[0].data;
+                // this.setState({data: res_dat});
+                console.log(res_dat);
+                this.getNodesAndEdges(res_dat);
             });
     }
     componentWillMount() {
@@ -66,13 +72,40 @@ class Request extends Component {
     componentDidMount() {
         this.login();
         this.query();
+        // this.getNodesAndEdges();
+        // console.log(this.state.nodes);
+        // console.log(this.state.edges);
     }
+
+    getNodesAndEdges(data) {
+        let nodes = [];
+        let edges = [];
+        if (data == null) {
+            return;
+        }
+        for (let d of data) {
+            for (let i = 0; i < d.meta[0].length; i++) {
+                if (d.meta[0][i].type === 'node') {
+                    nodes.push(d.row[0][i]);
+                } else if (d.meta[0][i].type === 'relationship') {
+                    edges.push(d.row[0][i])
+                }
+            }
+        }
+        console.log(nodes);
+        console.log(edges);
+        this.setState({nodes: nodes});
+        this.setState({edges: edges});
+    }
+
     render() {
         return  <div>
-                    {/* <label>User Name: </label>
-                    <input />
-                    <label>User Name: </label>
-                    <input /> */}
+                    <p>nodes: {JSON.stringify(this.state.nodes)}</p>
+                    <hr/>
+                    <p>edges: {JSON.stringify(this.state.edges)}</p>
+                    <Graph nodes={this.state.nodes} edges={this.state.edges}/>
+                    <Test/>
+                    <Test2/>
                 </div>
     }
 }

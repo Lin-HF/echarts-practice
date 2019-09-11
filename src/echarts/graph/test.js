@@ -1,28 +1,26 @@
-import React from 'react';
-import { Card } from 'react-bootstrap';
-//简单加载
-// import ReactEcharts from 'echarts-for-react';
-// 按需加载
-// import the core library.
-import ReactEchartsCore from 'echarts-for-react/lib/core';
-// then import echarts modules those you have used manually.
+import React, { Component } from 'react';
+
+// 引入 ECharts 主模块
 import echarts from 'echarts/lib/echarts';
-import 'echarts/lib/chart/graph';
+// 引入柱状图
+import  'echarts/lib/chart/bar';
+// 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/grid';
 import 'echarts/lib/component/title';
-import 'echarts/lib/component/legend';
 
-import echartTheme from '../echartTheme';
-import { extendChartView } from 'echarts/lib/echarts';
-
-export default class Graph extends React.Component {
-
-    componentWillMount() {
-        echarts.registerTheme('Imooc', echartTheme);
-        // echarts.init();
+class EchartsTest extends Component {
+    state = {
+        myChart: null
     }
-
+    componentDidMount() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // 绘制图表
+        this.setState({myChart: myChart});
+        this.setState(prestate => ({
+            myChart: prestate.myChart.setOption(this.getOption())
+        }))
+    }
     createNodes = (count) => {
         var nodes = [];
         for (var i = 0; i < count; i++) {
@@ -83,7 +81,6 @@ export default class Graph extends React.Component {
                 right: '4%',
                 bottom: '3%',
                 containLabel: true,
-                // height: '500px'
             },
             title: {
                 text: 'Simple Graph',
@@ -104,9 +101,7 @@ export default class Graph extends React.Component {
                         show: true
                     }
                 },
-                // edgeSymbol: ['none', 'arrow'],
                 itemStyle: {
-                    // color: 'rgba(128, 128, 128, 0.5)',
                     opacity: 1.0,
                 },
                 label: {
@@ -115,27 +110,20 @@ export default class Graph extends React.Component {
                         textStyle: {
                             fontSize: 10
                         },
-                        // position: 'right'
                     }
                 },
                 edgeLabel: {
                     normal: {
                         show: true,
-                        fontSize: 8,
                         formatter: function (x) {
                             return x.data.name;
-                        }
+                        },
+                        
                     },
                     
                 },
                 data: datas[0].nodes,
-                // left: (idx % 4) * 25 + '%',
-                // top: Math.floor(idx / 4) * 25 + '%',
-                // width: '25%',
-                // height: '25%',
                 force: {
-                    // initLayout: 'circular'
-                    // gravity: 0
                     repulsion: 1000,
                     edgeLength: 30
                 },
@@ -147,48 +135,37 @@ export default class Graph extends React.Component {
                         target: e[1]
                     };
                 }),
-                // graphic: echarts.util.map(datas[0], (dataItem, dataIndex) => {
-                //     return {
-                //         type: 'circle',
-                //         shape: {
-                //             r: dataItem.symbolSize / 2
-                //         },
-                //         position: echarts.convertToPixel('grid', dataItem),
-                //         invisible: true,
-                //         draggable: true,
-                //         z: 100,
-                //         ondrag: echarts.util.curry((dataIndex) => {
-                //             datas[dataIndex] = echarts.convertFromPixel('grid', this.position);
-                //             echarts.setOption({
-                //                 series: [{
-                //                     id: 'a',
-                //                     datas: datas
-                //                 }]
-                //             });
-                //         }, dataIndex)
-                //     }
-                // } )
+                graphic: echarts.util.map(datas[0], (dataItem, dataIndex) => {
+                    return {
+                        type: 'circle',
+                        shape: {
+                            r: dataItem.symbolSize / 2
+                        },
+                        position: this.state.myChart.convertToPixel('grid', dataItem),
+                        invisible: true,
+                        draggable: true,
+                        z: 100,
+                        ondrag: echarts.util.curry((dataIndex) => {
+                            datas[dataIndex] = this.state.myChart.convertFromPixel('grid', this.position);
+                            echarts.setOption({
+                                series: [{
+                                    id: 'a',
+                                    datas: datas
+                                }]
+                            });
+                        }, dataIndex)
+                    }
+                } )
             }
         };
         return option;
     }
-
     render() {
+        
         return (
-            <div style={{margin: "7% 15%"}}>
-                <Card>
-                    <Card.Header>Graph</Card.Header>
-                    <Card.Body>
-                    <ReactEchartsCore
-                        style={{height: '500px'}}
-                        echarts={echarts}
-                        option={this.getOption()}
-                        theme='Imooc'
-                        />
-                    </Card.Body>
-                </Card>
-                
-            </div>
+            <div id="main" style={{ margin:"auto", width: 800, height: 400 }}></div>
         );
     }
 }
+
+export default EchartsTest;
