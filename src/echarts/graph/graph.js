@@ -44,7 +44,8 @@ export default class Graph extends React.Component {
             },
             tooltip: {
                 formatter: (x)=>(x.data.des),
-                position: 'center'
+                position: 'center',
+                
             },
             series: {
                 name: 'Simple Graph',
@@ -59,7 +60,7 @@ export default class Graph extends React.Component {
                     }
                 },
                 itemStyle: {
-                    opacity: 1.0,
+                    opacity: 1.0
                 },
                 label: {
                     normal: {
@@ -81,7 +82,7 @@ export default class Graph extends React.Component {
                 },
                 data: this.props.nodes,
                 force: {
-                    repulsion: 200,
+                    repulsion: 300,
                     edgeLength: 150
                 },
                 edges: this.props.edges,

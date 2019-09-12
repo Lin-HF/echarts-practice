@@ -45,7 +45,7 @@ class Request extends Component {
             "statements": [ {
                 "statement": "match (g:Gene {label:'JAK1'})," + 
                              "(d:Phenotype {label:'Diabetes'})," + 
-                             "p = (g)-[r*..2]-(d) return p limit 10",
+                             "p = (g)-[r*..2]-(d) return p limit 50",
                 "resultDataContents": [ "row", "graph" ]
             } ]
         };
@@ -101,8 +101,12 @@ class Request extends Component {
                 let n = {};
                 n.id = node.id;
                 n.name = node.properties.label
-                n.itemStyle = null;
+                n.itemStyle = {
+                    borderColor: "#000",
+                    borderWidth: 1
+                };
                 n.symbolSize = 50;
+                
                 // n.value = node.properties.label;
                 // n.category = node.labels[0]
                 n.category = categories.findIndex((el) => (el === node.labels[0]));
@@ -130,9 +134,9 @@ class Request extends Component {
 
     render() {
         return  <div>
-                    <p>nodes: {JSON.stringify(this.state.nodes)}</p>
+                    {/* <p>nodes: {JSON.stringify(this.state.nodes)}</p> */}
                     <hr/>
-                    <p>edges: {JSON.stringify(this.state.edges)}</p>
+                    {/* <p>edges: {JSON.stringify(this.state.edges)}</p> */}
                     <Graph nodes={this.state.nodes} edges={this.state.edges} categories={this.state.categories}/>
                     {/* <Test/> */}
                     {/* <Test2/> */}
