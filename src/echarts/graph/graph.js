@@ -19,8 +19,8 @@ export default class Graph extends React.Component {
     }
 
     componentDidMount() {
-        let myChart = echarts.init(document.getElementById("net"));
-        myChart.setOption(this.getOption());
+        // let myChart = echarts.init(document.getElementById("net"));
+        // myChart.setOption(this.getOption());
     }
 
     componentWillMount() {
@@ -29,61 +29,8 @@ export default class Graph extends React.Component {
         
         // let myChart = echarts.init();
     }
-
-    createNodes = (count) => {
-        var nodes = [];
-        for (var i = 0; i < count; i++) {
-            nodes.push({
-                id: i,
-                name: 'Node' + i,
-                itemStyle : null,
-                symbolSize : 50,
-                value : i,
-                //category = node.attributes.modularity_class,
-                // Use random x, y
-                x : null,
-                y : null,
-                draggable : true,
-            });
-        }
-        return nodes;
-    }
-
-    createEdges = (count) => {
-        var edges = [];
-        // if (count === 2) {
-        //     return [[0, 1]];
-        // }
-        // for (var i = 0; i < count; i++) {
-        //     edges.push([i, (i + 1) % count]);
-        // }
-        edges.push([0, 7]);
-        edges.push([0, 1]);
-        edges.push([2, 1]);
-        edges.push([3, 1]);
-        edges.push([3, 4]);
-        edges.push([4, 5]);
-        edges.push([5, 6]);
-        edges.push([6, 7]);
-        edges.push([7, 8]);
-        edges.push([8, 9]);
-        edges.push([8, 10]);
-        edges.push([8, 11]);
-        edges.push([11, 12]);
-        edges.push([11, 13]);
-        edges.push([13, 14]);
-        edges.push([14, 15]);
-        return edges;
-    }
     
     getOption = () => {
-        var datas = [];
-        for (var i = 0; i < 1; i++) {
-            datas.push({
-                nodes: this.createNodes(16),
-                edges: this.createEdges(16)
-            });
-        }
         let option = {
             grid: {
                 left: '3%',
@@ -96,7 +43,8 @@ export default class Graph extends React.Component {
                 subtext: 'Default Layout'
             },
             tooltip: {
-                formatter: (x)=>(x.data.name + ' source ' + x.data.source + " -> " + x.data.target) 
+                formatter: (x)=>(x.data.des),
+                position: 'center'
             },
             series: {
                 name: 'Simple Graph',
@@ -131,37 +79,35 @@ export default class Graph extends React.Component {
                     },
                     
                 },
-                data: datas[0].nodes,
+                data: this.props.nodes,
                 force: {
-                    repulsion: 1000,
-                    edgeLength: 30
+                    repulsion: 200,
+                    edgeLength: 150
                 },
-                edges: datas[0].edges.map(function (e) {
-                    return {
-                        name: 'Edge' + e[0] + " " + e[1],
-                        des: 'this is description',
-                        source: e[0],
-                        target: e[1]
-                    };
-                }),
+                edges: this.props.edges,
+                categories: this.props.categories
             }
         };
         return option;
     }
 
     render() {
+        let coponent = null;
+        if (this.props.nodes != null) {
+            coponent = <ReactEchartsCore
+            style={{height: '500px'}}
+            echarts={echarts}
+            option={this.getOption()}
+            theme='Imooc'
+            />
+        }
         return (
             <div style={{margin: "7% 15%"}}>
                 <Card>
                     <Card.Header>Graph</Card.Header>
                     <Card.Body>
-                    <ReactEchartsCore
-                        style={{height: '500px'}}
-                        echarts={echarts}
-                        option={this.getOption()}
-                        theme='Imooc'
-                        />
-                        <div id="net"></div>
+                    {coponent}
+                        {/* <div id="net"></div> */}
                     </Card.Body>
                 </Card>
                 
