@@ -6,6 +6,7 @@ import Line from "./echarts/line";
 import Graph from "./echarts/graph";
 import Request from './Http/request';
 import Event from './Event';
+import Neo4j from './Neo4j';
 import { NavLink, Switch, Route } from "react-router-dom";
 import "./App.css";
 
@@ -33,6 +34,9 @@ class App extends Component {
             <li>
               <NavLink to="/event">Event</NavLink>
             </li>
+            <li>
+              <NavLink to="/neo4j">Clickable</NavLink>
+            </li>
           </ul>
         </nav>
         <Switch>
@@ -42,6 +46,7 @@ class App extends Component {
           <Route path="/graph" component={Graph} />
           <Route path="/http" component={Request} />
           <Route path="/event" component={Event} />
+          <Route path="/neo4j" component={Neo4j} />
           <Route
             path="/"
             render={() => (
