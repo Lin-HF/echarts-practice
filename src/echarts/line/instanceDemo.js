@@ -78,6 +78,9 @@ class EchartsTest extends Component {
         };
       })
     });
+    myChart.on("click", function (param){               
+        console.log(param.dataIndex);
+    });
   }
 
   render() {

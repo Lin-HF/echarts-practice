@@ -172,6 +172,12 @@ export default class Graph extends React.Component {
         };
         return option;
     }
+    onclik = {
+        'click': this.printOut
+    }
+    printOut = () => {
+        console.log("hahahahah");
+    }
 
     render() {
         return (
@@ -184,6 +190,7 @@ export default class Graph extends React.Component {
                         echarts={echarts}
                         option={this.getOption()}
                         theme='Imooc'
+                        onEvents={this.onclik}
                         />
                     </Card.Body>
                 </Card>
