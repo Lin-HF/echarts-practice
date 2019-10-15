@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 //简单加载
 // import ReactEcharts from 'echarts-for-react';
@@ -16,6 +16,9 @@ import 'echarts/lib/component/legend';
 import echartTheme from '../echartTheme';
 
 export default class Draggable extends React.Component {
+    state = {
+        instance : null,
+    }
 
     componentWillMount() {
         echarts.registerTheme('Imooc', echartTheme);
@@ -55,6 +58,39 @@ export default class Draggable extends React.Component {
     }
     componentDidMount() {
         this.echartsInstance = this.echartsReactRef.getEchartsInstance();
+        this.setState({instance: this.echartsReactRef.getEchartsInstance()});
+    }
+    clickButton = () => {
+        const data = [
+            1000,
+            2000,
+            1500,
+            3000,
+            2000,
+            1200,
+            800
+        ];
+        this.echartsInstance.setOption({
+            graphic: echarts.util.map(data, function (item, dataIndex) {
+                return {
+                    type: 'circle',
+                    position: this.state.instance.convertToPixel('grid', item),
+                    shape: {
+                        r: 20 / 2
+                    },
+                    invisible: true,
+                    draggable: true,
+                    onClick: this.logout,
+                    // ondrag: echarts.util.curry(onPointDragging, dataIndex),
+                    // onmousemove: echarts.util.curry(showTooltip, dataIndex),
+                    // onmouseout: echarts.util.curry(hideTooltip, dataIndex),
+                    z: 100
+                };
+            })
+        })
+    }
+    logout = () => {
+        console.log("clicked");
     }
 
     render() {
@@ -71,6 +107,7 @@ export default class Draggable extends React.Component {
                         option={this.getOption()}
                         theme='Imooc'
                         />
+                    <Button onClick={this.clickButton}/>
                     </Card.Body>
                 </Card></Col>
             </Row>
