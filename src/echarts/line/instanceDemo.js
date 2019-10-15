@@ -81,9 +81,7 @@ class EchartsTest extends Component {
   }
 
   render() {
-    return <div id="main" style={{ width: 400, height: 400 }}>
-        <button onclik={this.changeClick}>单击实现拖拽</button>
-    </div>;
+    return <div id="main" style={{ width: 400, height: 400 }}></div>;
   }
 }
 
