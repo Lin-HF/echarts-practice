@@ -137,8 +137,17 @@ class GraphTest extends Component {
             }),
         }
     });
-    myChart.on("click", function (param){               
-        console.log(param.dataIndex);
+    // myChart.on("click", function (param){
+    //     if (param.dataType == "node") {
+    //         console.log(param.dataIndex);
+    //     }               
+    //     // console.log(param);
+    // });
+    myChart.on("dblclick", function (param) {
+        console.log("Mouse double click!");
+        if (param.dataType == "node") {
+            console.log(param.dataIndex);
+        }    
     });
   }
 
