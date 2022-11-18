@@ -11,7 +11,7 @@
     "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "1.1.5",
+    "react-scripts": "5.0.1",
     "@neo4j/browser-lambda-parser": "^1.0.3",
     "@relate-by-ui/css": "^1.0.4",
     "@relate-by-ui/saved-scripts": "^1.0.3",
